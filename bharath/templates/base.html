@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Tweet Scheduler</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
+    <style type="text/css">
+        body {
+            background: linear-gradient(to bottom right, aliceblue, skyblue);
+            color: #000;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        p,
+        span,
+        strike {
+            font-family: 'Montserrat', sans-serif;
+            text-align: center;
+        }
+
+        div.container {
+            padding: 30px;
+        }
+
+        #form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            background-color: #fff;
+            border-radius: 14px;
+            margin-top: 50px;
+            margin-bottom: 50px;
+
+            justify-content: space-around;
+            align-items: flex-start;
+
+        }
+
+        #task-container {
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 50px;
+            margin-bottom: 50px;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+        #form-wrapper {
+            top: 0rem;
+            border-bottom: 1px solid #e9e9e9;
+            border-radius: 14px;
+            background-color: #fff;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+            padding: 40px;
+        }
+
+        #title {
+            margin-top: 4px;
+        }
+
+        #submit {
+            margin-top: 20px;
+            background-color: #1259fe;
+            border-radius: 5px;
+            border: 0;
+            color: #fff;
+        }
+
+        #delete {
+            color: red;
+        }
+
+        .flex-wrapper {
+            display: flex;
+        }
+
+        .task-wrapper {
+            cursor: pointer;
+            border-bottom: 1px solid #e9e9e9;
+            color: #686868;
+            margin: 5px;
+            padding: 20px;
+        }
+
+        .task-wrapper:hover {
+            background-color: #F0F0F0;
+        }
+
+        .btn-outline-danger{
+            width: 25%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Welcome to Tweet Scheduler</h1>
+        <h3>You have {{ n_open_tweets }} tweets scheduled</h3>
+
+        <div id="form-container">
+            <div id="form-wrapper">
+                <form id="form" action="/tweet" method="POST">
+                    <div class="flex: 6">
+                        <textarea id="title" class="form-control" type="text" maxlength="280" name="message" placeholder="Message" required></textarea><br>
+                        <input id="title" class="form-control" type="text" name="time" placeholder="Add Time(YYYY-MM-DD hh:mm:ss)" required><br>
+                        <!-- <input id="title" class="form-control" type="password" name="pw" placeholder="Password"><br> -->
+                        <input class="btn btn-outline-info" type="submit" name="submit" value="Tweet">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
+            
+            {% for tweet in tweets %}
+                <div class="card card-body">
+                
+                    {% if tweet.done %} 
+                        <strike>
+                        {{tweet.time}} - {{tweet.message}}
+                        </strike>
+
+                    {% else %}
+                        {{tweet.time}} - {{tweet.message}} 
+                    {% endif %}<a href="/delete/{{ tweet.row_idx }}" class="btn btn-sm btn-outline-danger">Delete</a>
+             
+                </div>
+                <br>   
+
+            {% endfor %}
+                
+</body>
+
+</html>
